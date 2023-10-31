@@ -3,14 +3,14 @@ def ceaser_cipher(message, shift)
 end
 
 def shift_char (char, shift)
-  # char is lowercase
-  if char.ord.between?(97, 122)
-    return (97 + (char.ord - 97 + shift) % 26).chr
+
+  if char.ord.between?("a".ord, "z".ord)
+    # calculate required shift from a
+    return ("a".ord + (char.ord - "a".ord + shift) % 26).chr
   end
 
-  # char is uppercase
-  if char.ord.between?(65, 90) 
-    return (65 + (char.ord - 65 + shift) % 26).chr
+  if char.ord.between?("A".ord, "Z".ord) 
+    return ("A".ord + (char.ord - "A".ord + shift) % 26).chr
   end
 
   char
