@@ -1,31 +1,26 @@
 class Board
 
-    @@horizontals = [
+    LINES = [
         [0, 1, 2],
         [3, 4, 5],
-        [6, 7, 8]
-    ]
-
-    @@verticals = [
+        [6, 7, 8],
         [0, 3, 6],
         [1, 4, 7],
-        [2, 5, 8]
-    ]
-
-    @@diagonals = [
+        [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6]    
     ]
-
+:while
     def initialize
         @grid = [
             [nil, nil, nil],
             [nil, nil, nil],
             [nil, nil, nil]
         ]
+        @moves = 0
     end
 
-    def is_valid_move(loc, mark)
+    def record_move(loc, mark)
         row = loc // 3
         col = loc % 3
 
@@ -34,74 +29,26 @@ class Board
         end
 
         @grid[row][col] = mark
-
+        @moves += 1
     end
 
-    def is_winning_move(move)
-        return check_diagonals(move) || check_horizontal(move) || check_vertical(move)
-    end
+    def is_winning_move(loc, m)
+
 
     def draw_board
-
+        col_separator, row_separator = " | ", "--+---+--"
+        label_for_position = lambda{|position| @board[position] ? @board[position] : position}
+      
+        row_for_display = lambda{|row| row.map(&label_for_position).join(col_separator)}
+        row_positions = [[0,1,2], [3,4,5], [6,7,8]]
+        rows_for_display = row_positions.map(&row_for_display)
+        puts rows_for_display.join("\n" + row_separator + "\n")
     end
 
     private
 
-    def get_grid_pos(loc)
+    check
 
-    end
-
-    def check_horizontal(loc, mark)
-        for horizontal in @@horizontals:
-            if horizontal.include? loc
-                for pos in horizontal
-                    row = loc // 3
-                    col = loc % 3
-
-                    return false if @grid[row][col] != mark
-                    
-                end
-            end
-        end
-
-        return true
-    end
-
-    def check_vertical(loc, mark)
-        for vertical in @@verticals:
-            if vertical.include? loc
-                for pos in vertical
-                    row = loc // 3
-                    col = loc % 3
-
-                    return false if @grid[row][col] != mark
-                    
-                end
-            end
-        end
-
-        return true
-    end
-
-    def check_diagonals(loc, mark)
-        for diagonal in @@diagonals:
-            if diagonal.include? loc
-                for pos in diagonal
-                    row = loc // 3
-                    col = loc % 3
-
-                    if @grid[row][col] != mark
-                        break
-                    end
-                end
-
-                return true
-            end
-        end
-
-        return false
-
-    end
 
 end
 
